@@ -31,7 +31,7 @@ def scrape_updates(html_content):
     # Inicializa o objeto Selector com o conteúdo HTML
     selector = parsel.Selector(html_content)
 
-    # Seleciona os elementos que contêm as URLs das notícias, ignorando o primeiro (notícia em destaque)
+    # Seleciona os elem que contêm as URLs das notícias, ignorando o primeiro
     news_cards = selector.css("div.cs-overlay > a::attr(href)").getall()
 
     # Caso não encontre nenhuma URL, retorna uma lista vazia
