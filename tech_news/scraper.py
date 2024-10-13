@@ -1,5 +1,6 @@
 import requests
 import time
+import parsel
 
 
 # Requisito 1
@@ -27,8 +28,18 @@ def fetch(url):
 
 # Requisito 2
 def scrape_updates(html_content):
-    """Seu código deve vir aqui"""
-    raise NotImplementedError
+    # Inicializa o objeto Selector com o conteúdo HTML
+    selector = parsel.Selector(html_content)
+
+    # Seleciona os elementos que contêm as URLs das notícias, ignorando o primeiro (notícia em destaque)
+    news_cards = selector.css("div.cs-overlay > a::attr(href)").getall()
+
+    # Caso não encontre nenhuma URL, retorna uma lista vazia
+    if not news_cards:
+        return []
+
+    # Retorna a lista de URLs das notícias
+    return news_cards
 
 
 # Requisito 3
