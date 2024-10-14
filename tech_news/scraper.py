@@ -1,6 +1,7 @@
 import requests
 import time
 import parsel
+from .database import create_news
 
 
 # Requisito 1
@@ -99,5 +100,36 @@ def scrape_news(html_content):
 
 # Requisito 5
 def get_tech_news(amount):
-    """Seu código deve vir aqui"""
-    raise NotImplementedError
+    url = 'https://blog.betrybe.com/'
+    news_list = []
+
+    while len(news_list) < amount:
+        # Faz o fetch da página inicial
+        html_content = fetch(url)
+
+        # Obtém as URLs das notícias
+        news_urls = scrape_updates(html_content)
+
+        # Para cada URL obtida, faz o scrape dos detalhes da notícia
+        for news_url in news_urls:
+            if len(news_list) >= amount:
+                break
+            news_html = fetch(news_url)
+            news_data = scrape_news(news_html)
+            news_list.append(news_data)
+
+        # Obtém o link da próxima página
+        url = scrape_next_page_link(html_content)
+
+        # Se não houver próxima página, interrompe o loop
+        if not url:
+            break
+
+        # Respeitar o rate limit de 1 requisição por segundo
+        time.sleep(1)
+
+    # Insere as notícias no MongoDB
+    create_news(news_list)
+
+    # Retorna as notícias inseridas
+    return news_list
