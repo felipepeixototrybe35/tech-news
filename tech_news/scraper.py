@@ -56,8 +56,45 @@ def scrape_next_page_link(html_content):
 
 # Requisito 4
 def scrape_news(html_content):
-    """Seu código deve vir aqui"""
-    raise NotImplementedError
+    selector = parsel.Selector(text=html_content)
+
+    # Extraindo a URL da notícia
+    url = selector.css('link[rel=canonical]::attr(href)').get()
+
+    # Extraindo o título da notícia
+    title = selector.css('h1.entry-title::text').get().strip()
+
+    # Extraindo a data da notícia
+    timestamp = selector.css('li.meta-date::text').get()
+
+    # Extraindo o nome da pessoa autora
+    writer = selector.css('span.author a::text').get()
+
+    # Extraindo o tempo de leitura
+    reading_time = int(
+        selector.css('li.meta-reading-time::text').re_first(r'\d+')
+        )
+
+    # Extraindo o resumo
+    summary = "".join(selector.css(
+        'div.entry-content > p:first-of-type *::text'
+        ).getall()).strip()
+
+    # Extraindo a categoria
+    category = selector.css('a.category-style span.label::text').get()
+
+    # Criando o dicionário com as informações
+    news_data = {
+        "url": url,
+        "title": title,
+        "timestamp": timestamp,
+        "writer": writer,
+        "reading_time": reading_time,
+        "summary": summary,
+        "category": category,
+    }
+
+    return news_data
 
 
 # Requisito 5
