@@ -3,15 +3,17 @@ import pytest
 from unittest.mock import patch
 
 
-def test_reading_plan_group_news(mock_find_news):
-    # Mockando o retorno da função find_news
-    mock_find_news = [
+# Mockando o retorno da função find_news
+mock_find_news = [
         {"title": "Notícia A", "reading_time": 4},
         {"title": "Notícia B", "reading_time": 3},
         {"title": "Notícia C", "reading_time": 10},
         {"title": "Notícia D", "reading_time": 15},
         {"title": "Notícia E", "reading_time": 12},
     ]
+
+
+def test_reading_plan_group_news():
 
     expected_output = {
         "readable": [
