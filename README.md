@@ -1,4 +1,6 @@
-Este projeto é fruto do curso de Desenvolvedor Web FullStack da Trybe, por isso vem separado por requisitos.
+Este projeto é fruto do curso de Desenvolvedor Web FullStack da Trybe, por isso os commits vem separados por requisitos. Parte do desenvolvimento do código foi realizado pela Trybe, os arquivos em que eu desenvolvi código são os explícitos nos commits.
+
+Aqui é desenvolvido um sistema de busca de notícias sobre tecnologia. É realizada uma raspagem de dados e armazenanamento num banco de dados MongoDB.
 
 Requisito 1 >> Função `fetch` em `tech_news/scraper.py`
 Esta função é responsável por fazer a requisição HTTP ao site e obter o conteúdo HTML.
